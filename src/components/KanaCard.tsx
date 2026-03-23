@@ -1,11 +1,11 @@
 import { Card } from '../ui/Card';
 
-interface CharacterCardProps {
+interface KanaCardProps {
   character: string;
   romanji: string;
 }
 
-export function CharacterCard({ character, romanji }: CharacterCardProps) {
+export function KanaCard({ character, romanji }: KanaCardProps) {
   return (
     <Card className="flex flex-col items-center justify-center py-3 hover:shadow transition-shadow">
       <span className="text-2xl font-bold text-gray-800 leading-none">{character}</span>

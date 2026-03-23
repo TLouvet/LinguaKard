@@ -1,6 +1,6 @@
 import { kanaData } from '../data/kana';
-import { StudyMode } from '../components/StudyMode';
-import { QuizMode } from '../components/QuizMode';
+import { KanaStudyMode } from '../components/KanaStudyMode';
+import { KanaQuizMode } from '../components/KanaQuizMode';
 import { Button } from '../ui/Button';
 import { TabsList, TabsTrigger } from '../ui/Tabs';
 import { useQueryState } from '../hooks/useQueryState';
@@ -23,8 +23,8 @@ export function KanaPage() {
         </div>
       </div>
       {tab === 'study'
-        ? <StudyMode script={script} kanaData={kanaData} />
-        : <QuizMode key={script} script={script} kanaData={kanaData} />
+        ? <KanaStudyMode script={script} kanaData={kanaData} />
+        : <KanaQuizMode key={script} script={script} kanaData={kanaData} />
       }
     </div>
   );

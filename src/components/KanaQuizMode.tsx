@@ -3,12 +3,12 @@ import { useBestScore } from '../hooks/useBestScore';
 import { QuizOptionCard } from '../ui/QuizOptionCard';
 import type { Kana } from '../data/kana';
 
-interface QuizModeProps {
+interface KanaQuizModeProps {
   script: 'hiragana' | 'katakana';
   kanaData: Kana[];
 }
 
-export function QuizMode({ script, kanaData }: QuizModeProps) {
+export function KanaQuizMode({ script, kanaData }: KanaQuizModeProps) {
   const { displayChar, options, selectedAnswer, currentKana, score, submitAnswer } =
     useQuiz(kanaData, script);
   const bestScore = useBestScore('kana-best-score', score.correct);

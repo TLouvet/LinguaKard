@@ -1,12 +1,10 @@
-import { useState } from 'react';
 import { HangeulStudyMode } from '../components/HangeulStudyMode';
 import { HangeulQuizMode } from '../components/HangeulQuizMode';
 import { TabsList, TabsTrigger } from '../ui/Tabs';
-
-type Tab = 'study' | 'quiz';
+import { useQueryState } from '../hooks/useQueryState';
 
 export function HangeulPage() {
-  const [tab, setTab] = useState<Tab>('study');
+  const [tab, setTab] = useQueryState<'study' | 'quiz'>('tab', 'study');
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">

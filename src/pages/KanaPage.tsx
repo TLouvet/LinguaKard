@@ -1,15 +1,13 @@
-import { useState } from 'react';
 import { kanaData } from '../data/kana';
 import { StudyMode } from '../components/StudyMode';
 import { QuizMode } from '../components/QuizMode';
 import { Button } from '../ui/Button';
 import { TabsList, TabsTrigger } from '../ui/Tabs';
-
-type Tab = 'study' | 'quiz';
+import { useQueryState } from '../hooks/useQueryState';
 
 export function KanaPage() {
-  const [tab, setTab] = useState<Tab>('study');
-  const [script, setScript] = useState<'hiragana' | 'katakana'>('hiragana');
+  const [tab, setTab] = useQueryState<'study' | 'quiz'>('tab', 'study');
+  const [script, setScript] = useQueryState<'hiragana' | 'katakana'>('script', 'hiragana');
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">

@@ -1,12 +1,10 @@
-import { useState } from 'react';
-import { Button } from '../ui/Button';
 import { KanjiStudyMode } from '../components/KanjiStudyMode';
 import { KanjiQuizMode } from '../components/KanjiQuizMode';
-
-type Tab = 'study' | 'quiz';
+import { Button } from '../ui/Button';
+import { useQueryState } from '../hooks/useQueryState';
 
 export function KanjiPage() {
-  const [tab, setTab] = useState<Tab>('study');
+  const [tab, setTab] = useQueryState<'study' | 'quiz'>('tab', 'study');
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">

@@ -1,10 +1,9 @@
 import { useState, useMemo } from 'react';
-import type { Hangeul } from '../data/hangeul';
 
-export function useHangeulQuiz(hangeulData: Hangeul[]) {
+export function useQuizCore<T>(data: T[], getAnswer: (item: T) => string) {
   const shuffled = useMemo(
-    () => [...hangeulData].sort(() => Math.random() - 0.5),
-    [hangeulData]
+    () => [...data].sort(() => Math.random() - 0.5),
+    [data]
   );
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -14,37 +13,29 @@ export function useHangeulQuiz(hangeulData: Hangeul[]) {
   const current = shuffled[currentIndex % shuffled.length];
 
   const options = useMemo(() => {
-    const correct = current.romanization;
-    const distractors = hangeulData
-      .filter(h => h.romanization !== correct)
+    const correct = getAnswer(current);
+    const distractors = data
+      .filter(item => getAnswer(item) !== correct)
       .sort(() => Math.random() - 0.5)
       .slice(0, 3)
-      .map(h => h.romanization);
+      .map(item => getAnswer(item));
     return [...distractors, correct].sort(() => Math.random() - 0.5);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentIndex, hangeulData]);
+  }, [currentIndex, data]);
 
   const submitAnswer = (answer: string) => {
     if (selectedAnswer !== null) return;
-
     setSelectedAnswer(answer);
-    const isCorrect = answer === current.romanization;
+    const isCorrect = answer === getAnswer(current);
     setScore(prev => ({
       correct: prev.correct + (isCorrect ? 1 : 0),
       total: prev.total + 1,
     }));
-
     setTimeout(() => {
       setSelectedAnswer(null);
       setCurrentIndex(prev => prev + 1);
     }, 1500);
   };
 
-  return {
-    current,
-    options,
-    selectedAnswer,
-    score,
-    submitAnswer,
-  };
+  return { current, options, selectedAnswer, score, submitAnswer };
 }

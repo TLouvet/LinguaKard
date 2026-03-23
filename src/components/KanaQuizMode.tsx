@@ -1,4 +1,4 @@
-import { useQuiz } from '../hooks/useQuiz';
+import { useQuizCore } from '../hooks/useQuizCore';
 import { useBestScore } from '../hooks/useBestScore';
 import { QuizOptionCard } from '../ui/QuizOptionCard';
 import { QuizScore } from '../ui/QuizScore';
@@ -10,9 +10,10 @@ interface KanaQuizModeProps {
 }
 
 export function KanaQuizMode({ script, kanaData }: KanaQuizModeProps) {
-  const { displayChar, options, selectedAnswer, currentKana, score, submitAnswer } =
-    useQuiz(kanaData, script);
+  const { current, options, selectedAnswer, score, submitAnswer } =
+    useQuizCore(kanaData, k => k.romanji);
   const bestScore = useBestScore('kana-best-score', score.correct);
+  const displayChar = script === 'hiragana' ? current.hiragana : current.katakana;
 
   return (
     <div className="flex flex-col items-center gap-6 py-8">
@@ -25,7 +26,7 @@ export function KanaQuizMode({ script, kanaData }: KanaQuizModeProps) {
           <QuizOptionCard
             key={option}
             option={option}
-            correctAnswer={currentKana.romanji}
+            correctAnswer={current.romanji}
             selectedAnswer={selectedAnswer}
             onSelect={() => submitAnswer(option)}
           />

@@ -1,11 +1,12 @@
-import { useKanjiQuiz } from '../hooks/useKanjiQuiz';
+import { useQuizCore } from '../hooks/useQuizCore';
 import { useBestScore } from '../hooks/useBestScore';
 import { QuizOptionCard } from '../ui/QuizOptionCard';
 import { QuizScore } from '../ui/QuizScore';
 import { kanjiData } from '../data/kanji';
 
 export function KanjiQuizMode() {
-  const { current, options, selectedAnswer, score, submitAnswer } = useKanjiQuiz(kanjiData);
+  const { current, options, selectedAnswer, score, submitAnswer } =
+    useQuizCore(kanjiData, k => k.meaning);
   const bestScore = useBestScore('kanji-best-score', score.correct);
 
   return (

@@ -1,19 +1,26 @@
 import { KanjiStudyMode } from '../components/KanjiStudyMode';
 import { KanjiQuizMode } from '../components/KanjiQuizMode';
-import { Button } from '../ui/Button';
+import { TabsList, TabsTrigger } from '../ui/Tabs';
+import { HistorySection } from '../ui/HistorySection';
+import { kanjiHistory } from '../data/kanjiHistory';
 import { useQueryState } from '../hooks/useQueryState';
 
 export function KanjiPage() {
-  const [tab, setTab] = useQueryState<'study' | 'quiz'>('tab', 'study');
+  const [tab, setTab] = useQueryState<'study' | 'quiz' | 'history'>('tab', 'study');
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
       <h1 className="text-2xl font-bold text-gray-800 mb-4">Kanji — JLPT N5</h1>
-      <div className="flex gap-3 mb-6">
-        <Button active={tab === 'study'} onClick={() => setTab('study')}>Étude</Button>
-        <Button active={tab === 'quiz'} onClick={() => setTab('quiz')}>Quiz</Button>
+      <div className="mb-6">
+        <TabsList>
+          <TabsTrigger active={tab === 'study'} onClick={() => setTab('study')}>Étude</TabsTrigger>
+          <TabsTrigger active={tab === 'quiz'} onClick={() => setTab('quiz')}>Quiz</TabsTrigger>
+          <TabsTrigger active={tab === 'history'} onClick={() => setTab('history')}>Histoire</TabsTrigger>
+        </TabsList>
       </div>
-      {tab === 'study' ? <KanjiStudyMode /> : <KanjiQuizMode key="kanji-quiz" />}
+      {tab === 'study' && <KanjiStudyMode />}
+      {tab === 'quiz' && <KanjiQuizMode key="kanji-quiz" />}
+      {tab === 'history' && <HistorySection items={kanjiHistory} />}
     </div>
   );
 }

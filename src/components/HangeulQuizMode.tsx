@@ -1,11 +1,12 @@
-import { useHangeulQuiz } from '../hooks/useHangeulQuiz';
+import { useQuizCore } from '../hooks/useQuizCore';
 import { useBestScore } from '../hooks/useBestScore';
 import { QuizOptionCard } from '../ui/QuizOptionCard';
 import { QuizScore } from '../ui/QuizScore';
 import { hangeulData } from '../data/hangeul';
 
 export function HangeulQuizMode() {
-  const { current, options, selectedAnswer, score, submitAnswer } = useHangeulQuiz(hangeulData);
+  const { current, options, selectedAnswer, score, submitAnswer } =
+    useQuizCore(hangeulData, h => h.romanization);
   const bestScore = useBestScore('hangeul-best-score', score.correct);
 
   return (

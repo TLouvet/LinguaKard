@@ -1,11 +1,12 @@
-import { useArabicQuiz } from '../hooks/useArabicQuiz';
+import { useQuizCore } from '../hooks/useQuizCore';
 import { useBestScore } from '../hooks/useBestScore';
 import { QuizOptionCard } from '../ui/QuizOptionCard';
 import { QuizScore } from '../ui/QuizScore';
 import { arabicData } from '../data/arabic';
 
 export function ArabicQuizMode() {
-  const { current, options, selectedAnswer, score, submitAnswer } = useArabicQuiz(arabicData);
+  const { current, options, selectedAnswer, score, submitAnswer } =
+    useQuizCore(arabicData, l => l.transliteration);
   const bestScore = useBestScore('arabic-best-score', score.correct);
 
   return (

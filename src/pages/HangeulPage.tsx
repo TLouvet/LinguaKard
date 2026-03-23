@@ -1,10 +1,12 @@
 import { HangeulStudyMode } from '../components/HangeulStudyMode';
 import { HangeulQuizMode } from '../components/HangeulQuizMode';
 import { TabsList, TabsTrigger } from '../ui/Tabs';
+import { HistorySection } from '../ui/HistorySection';
+import { hangeulHistory } from '../data/hangeulHistory';
 import { useQueryState } from '../hooks/useQueryState';
 
 export function HangeulPage() {
-  const [tab, setTab] = useQueryState<'study' | 'quiz'>('tab', 'study');
+  const [tab, setTab] = useQueryState<'study' | 'quiz' | 'history'>('tab', 'study');
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-6">
@@ -13,9 +15,12 @@ export function HangeulPage() {
         <TabsList>
           <TabsTrigger active={tab === 'study'} onClick={() => setTab('study')}>Étude</TabsTrigger>
           <TabsTrigger active={tab === 'quiz'} onClick={() => setTab('quiz')}>Quiz</TabsTrigger>
+          <TabsTrigger active={tab === 'history'} onClick={() => setTab('history')}>Histoire</TabsTrigger>
         </TabsList>
       </div>
-      {tab === 'study' ? <HangeulStudyMode /> : <HangeulQuizMode key="hangeul-quiz" />}
+      {tab === 'study' && <HangeulStudyMode />}
+      {tab === 'quiz' && <HangeulQuizMode key="hangeul-quiz" />}
+      {tab === 'history' && <HistorySection items={hangeulHistory} />}
     </div>
   );
 }

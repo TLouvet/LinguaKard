@@ -1,11 +1,12 @@
-import { useKoreanWordsQuiz } from '../hooks/useKoreanWordsQuiz';
+import { useQuizCore } from '../hooks/useQuizCore';
 import { useBestScore } from '../hooks/useBestScore';
 import { QuizOptionCard } from '../ui/QuizOptionCard';
 import { QuizScore } from '../ui/QuizScore';
 import { koreanWordsData } from '../data/koreanWords';
 
 export function KoreanWordsQuizMode() {
-  const { current, options, selectedAnswer, score, submitAnswer } = useKoreanWordsQuiz(koreanWordsData);
+  const { current, options, selectedAnswer, score, submitAnswer } =
+    useQuizCore(koreanWordsData, w => w.french);
   const bestScore = useBestScore('korean-words-best-score', score.correct);
 
   return (

@@ -46,6 +46,8 @@ export const kanaRows = ['a', 'ka', ...] as const
 | `useKanjiQuiz` | Kanji quiz logic (same pattern, quizzes on `meaning`) |
 | `useHangeulQuiz` | Hangeul quiz logic (quizzes on `romanization`) |
 | `useKoreanWordsQuiz` | Korean vocabulary quiz (quizzes on `french`) |
+| `useArabicQuiz` | Arabic quiz logic (quizzes on `transliteration`) |
+| `useQueryState` | Like `useState` but synced with a URL search param (survives refresh) |
 | `useBestScore` | Wraps `useLocalStorage` + `useEffect` to track a persistent high score |
 | `useLocalStorage` | Generic typed localStorage hook with toast error handling |
 
@@ -77,11 +79,14 @@ Stateless (or near-stateless) primitives with no domain knowledge.
 | Component | Usage |
 |---|---|
 | `Button` | Toggle button with `active` prop (blue/gray) |
+| `IconButton` | Icon-only button with `active` prop and `label` for accessibility |
 | `Card` | White rounded box, spreads `HTMLDivElement` attrs |
+| `Badge` | Small pill label with `variant` prop (blue/green/orange/gray) |
 | `NavLink` | Router `<Link>` with active style via `useLocation` |
 | `NavDropdown` | Click-to-open dropdown with outside-click dismiss |
 | `QuizOptionCard` | Quiz answer card — owns correct/wrong/neutral styling |
 | `TabsList` / `TabsTrigger` | Underline-style tabs, horizontally scrollable on mobile |
+| `Table` / `TableHead` / `TableBody` / `TableRow` / `TableHeader` / `TableCell` | Compound table primitive |
 
 ---
 
@@ -152,6 +157,33 @@ const myLanguageItems = [
 ]
 // ...
 <NavDropdown label="My Language" items={myLanguageItems} />
+```
+
+---
+
+## Rules & conventions
+
+### Quiz modes — never reveal the answer
+
+Quiz components must **never display any field that hints at the correct answer** alongside the question character. This includes romanizations, names, or readings shown below the character.
+
+The only safe fields to show in a quiz are those that are not the answer and do not imply it. When in doubt, show only the bare character/word being tested.
+
+```tsx
+// ✅ correct — bare character only
+<span>{current.letter}</span>
+
+// ❌ wrong — nameRoman contains the answer (e.g. "alif" → transliteration "a")
+<span>{current.letter}</span>
+<span>{current.nameRoman}</span>
+```
+
+### URL state
+
+Tab and script selection must use `useQueryState` instead of `useState` so the URL reflects the current view and survives refresh.
+
+```tsx
+const [tab, setTab] = useQueryState<'study' | 'quiz'>('tab', 'study');
 ```
 
 ---

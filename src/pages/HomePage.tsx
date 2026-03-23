@@ -1,6 +1,26 @@
 import { Link } from 'react-router-dom';
 import { Badge } from '../ui/Badge';
 import { Card } from '../ui/Card';
+import { Accordion } from '../ui/Accordion';
+
+const faqItems = [
+  {
+    question: "Par où commencer ?",
+    answer: "Si vous débutez en japonais, commencez par les Kana (hiragana puis katakana). Pour le coréen, le Hangeul est un excellent point d'entrée car l'alphabet s'apprend en quelques heures.",
+  },
+  {
+    question: "Comment fonctionne le quiz ?",
+    answer: "Chaque question affiche un caractère ou un mot, et vous devez choisir la bonne réponse parmi 4 propositions. Votre score est suivi en temps réel et le meilleur score est sauvegardé localement.",
+  },
+  {
+    question: "Mes scores sont-ils sauvegardés ?",
+    answer: "Oui, le meilleur score de chaque quiz est enregistré dans le stockage local de votre navigateur. Il persiste entre les sessions tant que vous ne videz pas le cache.",
+  },
+  {
+    question: "L'application fonctionne-t-elle hors ligne ?",
+    answer: "Toutes les données sont intégrées dans l'application, donc une fois la page chargée, vous pouvez l'utiliser sans connexion internet.",
+  },
+];
 
 interface FeatureCardProps {
   title: string;
@@ -38,11 +58,11 @@ export function HomePage() {
       <section className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white">
         <div className="max-w-4xl mx-auto px-4 py-20 flex flex-col items-center text-center gap-6">
           <div className="flex gap-4 text-5xl" aria-hidden>
-            <span>あ</span><span>ア</span><span>漢</span><span>ㄱ</span><span>한</span>
+            <span>あ</span><span>ア</span><span>漢</span><span>ㄱ</span><span>한</span><span>ع</span>
           </div>
           <h1 className="text-5xl font-extrabold tracking-tight">LinguaKard</h1>
           <p className="text-xl text-blue-100 max-w-xl">
-            Apprenez les alphabets et le vocabulaire japonais et coréen à votre rythme, grâce à des fiches et des quiz interactifs.
+            Apprenez les alphabets et le vocabulaire japonais, coréen et arabe à votre rythme, grâce à des fiches et des quiz interactifs.
           </p>
           <Link
             to="/kana"
@@ -90,7 +110,20 @@ export function HomePage() {
             to="/korean-words"
             badges={<Badge variant="blue">Disponible</Badge>}
           />
+          <FeatureCard
+            icon="ع"
+            title="Alphabet arabe"
+            description="Découvrez les 28 lettres de l'alphabet arabe, regroupées par famille de formes."
+            to="/arabic"
+            badges={<Badge variant="blue">Disponible</Badge>}
+          />
         </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="max-w-4xl mx-auto px-4 pb-16">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">Questions fréquentes</h2>
+        <Accordion items={faqItems} />
       </section>
     </div>
   );
